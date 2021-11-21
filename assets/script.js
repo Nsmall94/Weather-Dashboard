@@ -1,22 +1,27 @@
 let $cityDate = moment().format("llll");
 $("#currentdate").text($cityDate);
 
+/* City Search Functions */
+// click listener calls citysearch() and soon a function related to the .search-history sidebar
 let $clicked = $(".buttonsearch");
 $clicked.on("click", citysearch);
 $clicked.on("click", searchSave);
+// add Enter key for searching as well
 $("input").keyup(function () {
     if (event.key === "Enter") {
         $clicked.click();
     }
 })
+// Seachcityname function
 function citysearch() {
+    // saved citer enter by USer in a let
     let cityname = (($(this).parent()).siblings("#cityenter")).val().toLowerCase();
+    // empty search bar with setTimeout() so the City name is not gonna stuck on input section
     function clear() {
         $("#cityenter").val("");
     }
-
-    fetch("https://api.openweathermap.org/data/2.5/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}");
     setTimeout(clear, 300);
+    //Query for Current Weather Using API URL And Ajax 
     let firstQueryURL = "https://api.openweathermap.org/data/2.5/weather?q=" +
         cityname + "&units=imperial&appid=e7c303b6206e1039548ab3f11d2207b3";
     $.ajax({
